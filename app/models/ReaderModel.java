@@ -1,13 +1,15 @@
 package models;
 
+import io.ebean.Model;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "reader")
+public class ReaderModel extends Model {
 
     @Id
     @Column(name = "id")
@@ -15,9 +17,6 @@ public class Book {
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "author")
-    private String author;
 
     public int getId() {
         return id;
@@ -33,13 +32,5 @@ public class Book {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 }

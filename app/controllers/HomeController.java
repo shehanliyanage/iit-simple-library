@@ -1,10 +1,12 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.ebean.Ebean;
-import models.Book;
+import dto.Book;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import services.LibraryManager;
+import services.WestminsterLibraryManager;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ import java.util.List;
  */
 public class HomeController extends Controller {
 
+    LibraryManager libraryManager = new WestminsterLibraryManager();
+
     /**
      * An action that renders an HTML page with a welcome message.
      * The configuration in the <code>routes</code> file means that
@@ -22,8 +26,7 @@ public class HomeController extends Controller {
      */
     public Result index() {
 
-
-        List<Book> books = Ebean.find(Book.class).findList();
+        List<Book> books = libraryManager.getAllBooks();
 
         return ok(Json.toJson(books));
     }
@@ -32,17 +35,18 @@ public class HomeController extends Controller {
 
         JsonNode body = request().body().asJson();
 
-        String name = body.get("name").asText();
-        String author = body.get("author").asText();
+        String readerName = body.get("readerName").asText();
+        String itemName = body.get("itemName").asText();
+        String authorName = body.get("authorName").asText();
 
-        Book book = new Book();
-        book.setName(name);
-        book.setAuthor(author);
+        libraryManager.addBook(itemName, authorName, readerName);
 
-        Ebean.save(book);
+        return ok("Adding new book successful");
 
-        List<Book> books = Ebean.find(Book.class).findList();
-        return ok(Json.toJson(books));
     }
+
+
+
+
 
 }
