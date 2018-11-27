@@ -10,6 +10,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 
-GET     /books                      controllers.HomeController.index
+GET     /library/books              controllers.HomeController.getAllBooks
 
-POST    /books                      controllers.HomeController.addBook
+POST    /library/books              controllers.HomeController.addBook

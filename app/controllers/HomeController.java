@@ -31,6 +31,13 @@ public class HomeController extends Controller {
         return ok(Json.toJson(books));
     }
 
+    public Result getAllBooks() {
+
+        List<Book> books = libraryManager.getAllBooks();
+
+        return ok(Json.toJson(books));
+    }
+
     public Result addBook() {
 
         JsonNode body = request().body().asJson();
